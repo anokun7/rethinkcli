@@ -16,7 +16,7 @@ func GetFields(url string) []string {
 	}
 
 	// Fetch the 1st row from the database
-	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Nth(1).Keys().Run(session)
+	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Nth(0).Keys().Run(session)
 	if err != nil {
 		fmt.Print(err)
 	}
