@@ -31,7 +31,6 @@ func GetFields(url string) []string {
 	if err != nil {
 		fmt.Printf("Error scanning database result: %s", err)
 	}
-	println(keys)
 	return keys
 }
 
@@ -56,6 +55,7 @@ func GetTableContents(url string) {
 		return
 	}
 
+	fields := GetFields(os.Args[1])
 	var row map[string]interface{}
 	i := 0
 	for res.Next(&row) {
@@ -64,11 +64,12 @@ func GetTableContents(url string) {
 			return
 		}
 		i += 1
-		fmt.Printf("%2d: %s\n", i, row["title"])
+		for _, field := range fields {
+			fmt.Printf("%2d: %s: %v\n", i, field, row[field])
+		}
 	}
 }
 
 func main() {
 	GetTableContents(os.Args[1])
-	fmt.Println(GetFields(os.Args[1]))
 }
