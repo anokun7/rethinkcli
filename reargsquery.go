@@ -15,7 +15,7 @@ func GetFields(url string) []string {
 		log.Fatalln(err)
 	}
 
-	// Fetch the row from the database
+	// Fetch the 1st row from the database
 	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Nth(1).Keys().Run(session)
 	if err != nil {
 		fmt.Print(err)
@@ -42,7 +42,7 @@ func GetTableContents(url string) {
 		log.Fatalln(err)
 	}
 
-	// Fetch the row from the database
+	// Fetch everything from the table
 	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Run(session)
 	if err != nil {
 		fmt.Print(err)
@@ -64,10 +64,12 @@ func GetTableContents(url string) {
 			return
 		}
 		i += 1
+		fmt.Printf("%2d:\n", i)
 		for _, field := range fields {
-			fmt.Printf("%2d: %s: %v\n", i, field, row[field])
+			fmt.Printf("%15s: %v\n", field, row[field])
 		}
 	}
+	fmt.Printf("\n\t\t====  Total rows returned: %d ====\n\n", i)
 }
 
 func main() {
