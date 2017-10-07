@@ -7,6 +7,34 @@ import (
 	"os"
 )
 
+func GetFields(url string) []string {
+	session, err := r.Connect(r.ConnectOpts{
+		Address: url,
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	// Fetch the row from the database
+	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Nth(1).Keys().Run(session)
+	if err != nil {
+		fmt.Print(err)
+	}
+	defer res.Close()
+
+	if res.IsNil() {
+		fmt.Print("Row not found")
+	}
+
+	var keys []string
+	err = res.All(&keys)
+	if err != nil {
+		fmt.Printf("Error scanning database result: %s", err)
+	}
+	println(keys)
+	return keys
+}
+
 func GetTableContents(url string) {
 	session, err := r.Connect(r.ConnectOpts{
 		Address: url,
@@ -42,4 +70,5 @@ func GetTableContents(url string) {
 
 func main() {
 	GetTableContents(os.Args[1])
+	fmt.Println(GetFields(os.Args[1]))
 }
