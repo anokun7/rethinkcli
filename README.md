@@ -21,8 +21,8 @@ To use this tool, it is recommended to use it as a docker image / container. Sim
 
 Clone this repo and run the following commands:
 ```
-cd rethinkcli
-docker build -t rethinkcli .
+$ cd rethinkcli
+$ docker build -t rethinkcli .
 ```
 Now you can run this against an existing RethinkDB server as:
 ```
@@ -56,10 +56,10 @@ $ docker run rethinkcli 54.174.187.41:28015 test movies
 
 You can also run this as a simple go program. You need to have golang installed. To run it as a go program, clone this repo and then run the following commands:
 ```
-cd rethinkcli
-go get gopkg.in/gorethink/gorethink.v3
-go build src/demo.go
-./demo <db-url> <db> <table>
+$ cd rethinkcli
+$ go get gopkg.in/gorethink/gorethink.v3
+$ go build src/demo.go
+$ ./demo <db-url> <db> <table>
 ```
 
 ## Limitations
