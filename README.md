@@ -17,7 +17,7 @@ This client tool uses the [GoRethink](https://github.com/GoRethink/gorethink) dr
 
 Querying a RethinkDB database is not always straightforward. There is no client you can install similar to how one would install a sql client for an RDBMS system. This tool aims to make querying of RethinkDB data simpler by accepting very few parameters (db server host, database and table) and dumping all the contents of the given table. It is currently available to run it on CLI only & does not support advanced filtering options.
 
-This tool is publicly available as a minimal docker image (only 2MB) as `anoop/rethingo`. Using this you can very quickly & easily run a RethinkDB client as `docker run anoop/rethingo 54.174.187.41:28015 test movies`.
+This tool is publicly available as a minimal docker image (only 2MB) as [`anoop/rethingo`](https://hub.docker.com/r/anoop/rethingo/). Using this you can very quickly & easily run a RethinkDB client as `docker run anoop/rethingo 54.174.187.41:28015 test movies`.
 
 ## Usage
 
