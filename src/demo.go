@@ -1,20 +1,16 @@
 package main
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	r "gopkg.in/gorethink/gorethink.v3"
+	"io/ioutil"
 	"log"
 	"os"
 )
 
-func GetFields(url string) []string {
-	session, err := r.Connect(r.ConnectOpts{
-		Address: url,
-	})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
+func GetFields(session *r.Session) []string {
 	// Fetch the 1st row from the database
 	res, err := r.DB(os.Args[2]).Table(os.Args[3]).Nth(0).Keys().Run(session)
 	if err != nil {
@@ -35,8 +31,14 @@ func GetFields(url string) []string {
 }
 
 func GetTableContents(url string) {
+	roots := x509.NewCertPool()
+	cert, err := ioutil.ReadFile("/tmp/cert.pem")
+	roots.AppendCertsFromPEM(cert)
 	session, err := r.Connect(r.ConnectOpts{
 		Address: url,
+		TLSConfig: &tls.Config{
+			RootCAs: roots,
+		},
 	})
 	if err != nil {
 		log.Fatalln(err)
@@ -55,7 +57,7 @@ func GetTableContents(url string) {
 		return
 	}
 
-	fields := GetFields(os.Args[1])
+	fields := GetFields(session)
 	var row map[string]interface{}
 	i := 0
 	for res.Next(&row) {
